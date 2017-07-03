@@ -33,9 +33,13 @@ $this->auth->logout();
 
 
         );
+
+
         if(!$auth){
+            $this->flash->addMessage('error','Wrong !!!!');
             return $response->withRedirect($this->router->pathFor('auth.signin'));
         }
+        $this->flash->addMessage('info','Log IN');
         return $response->withRedirect($this->router->pathFor('home'));
 
     }
@@ -63,6 +67,7 @@ public function getSignUp($request , $response){
                    'name' => $request->getParam('name'),
                    'password' => password_hash( $request->getParam('password'), PASSWORD_DEFAULT),
                ]);
+        $this->flash->addMessage('info','You have been signed up!');
 
         $this->auth->attempt($request->getParam('email'),$request->getParam('password'));
                return $response->withRedirect($this->router->pathFor('home'));
