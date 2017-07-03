@@ -62,9 +62,17 @@ $container['HomeController'] = function ($container){
 $container['AuthController'] = function ($container){
     return new \App\Controllers\Auth\AuthController($container);
 };
+$container['csrf'] = function ($container){
+return new \Slim\Csrf\Guard;
+
+};
+
 
 $app->add(new \App\Middleware\ValidationErrorMiddleware($container));
 $app->add(new \App\Middleware\OldInputMiddleware($container));
+$app->add(new \App\Middleware\CsrfViewMiddleware($container));
+
+$app->add($container->csrf);
 
 v::with('App\\Validation\\Rules');
 require __DIR__ . '/../app/routes.php' ;
