@@ -19,8 +19,8 @@ public function getSignUp($request , $response){
     public function postSignUp($request , $response)
     {
         $validation = $this->validator->validate($request,[
-            'email' => v::noWhiteSpace()->notEmpty(),
-            'name' => v::noWhiteSpace()->notEmpty()->alpha(),
+            'email' => v::noWhiteSpace()->notEmpty()->EmailAvailable(),
+            'name' => v::notEmpty()->alpha(),
             'password' => v::noWhiteSpace()->notEmpty(),
         ]);
 
