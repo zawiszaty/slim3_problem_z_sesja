@@ -15,21 +15,25 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 
-                <li><a href="#">Home</a></li>
+                <li><a href="{{ path_for('home') }}">Home</a></li>
 
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">signup</a></li>
-                <li><a href="#">signin</a></li>
+
+                {% if auth.check %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ auth.user.name }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">change password</a></li>
-                        <li><a href="#">logout</a></li>
+                        <li><a href="{{ path_for('auth.signout') }}">logout</a></li>
 
                     </ul>
                 </li>
+                {% else %}
+                <li><a href="{{ path_for('auth.signup') }}">signup</a></li>
+                <li><a href="{{ path_for('auth.signin') }}">signin</a></li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

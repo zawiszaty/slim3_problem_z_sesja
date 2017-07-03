@@ -11,3 +11,5 @@ $app->post('/auth/signup','AuthController:postSignUp');
 //login routes
 $app->get('/auth/signin','AuthController:getSignIn')->setName('auth.signin');
 $app->post('/auth/signin','AuthController:postSignIn');
+//logaut
+$app->get('/auth/signout','AuthController:getSignOut')->setName('auth.signout');

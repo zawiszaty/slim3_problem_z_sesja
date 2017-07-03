@@ -11,7 +11,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Slim\App([
     'settings' => [
-      'displayErrorsDetails' => 'true',
+      'displayErrorsDetails' => true,
         'db'=>[
             'driver'=>'mysql',
             'host'=>'localhost',
@@ -48,6 +48,15 @@ $container['view'] = function ($container){
         'cache' => false,
     ]);
     $view->addExtension(new Slim\Views\TwigExtension($container['router'], $container->request->getUri()));
+
+    $container['auth'] = function ($container){
+        return new \App\Auth\Auth;
+
+    };
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $container->auth->check(),
+        'user' => $container->auth->user(),
+    ]);
     return $view;
 };
 
@@ -66,10 +75,7 @@ $container['csrf'] = function ($container){
 return new \Slim\Csrf\Guard;
 
 };
-$container['auth'] = function ($container){
-    return new \App\Auth\Auth;
 
-};
 
 
 $app->add(new \App\Middleware\ValidationErrorMiddleware($container));
